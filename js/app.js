@@ -1,7 +1,7 @@
 // Enemies our player must avoid
 class Enemy {
     // Constuct enemies with a given x & y position, and speed
-    constructor(x = -100, y, speed = 5) {
+    constructor(x, y, speed) {
     this.x = x;
     this.y = y;
     this.speed = speed;
@@ -34,8 +34,20 @@ class Player {
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
-    handleInput() {
-
+    handleInput(key) {
+        if (key === 'up') {
+            this.y -= 5;
+        }
+        if (key === 'down') {
+            this.y +=5;
+        }
+        if (key === 'left') {
+            this.x -=5;
+        }
+        if (key === 'right') {
+            this.x +=5;
+        }
+        /* ADD COLLISION DETECTION, and PREVENT MOVING OFF SCREEN */
     }
 }
 
@@ -58,7 +70,8 @@ setInterval(function() {
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keydown', function(e) {
+    e.preventDefault();
     var allowedKeys = {
         37: 'left',
         38: 'up',
