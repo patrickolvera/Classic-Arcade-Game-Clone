@@ -36,18 +36,25 @@ class Player {
     }
     handleInput(key) {
         if (key === 'up') {
-            this.y -= 5;
+            this.y -= 15;
         }
         if (key === 'down') {
-            this.y +=5;
+            this.y += 15;
         }
         if (key === 'left') {
-            this.x -=5;
+            this.x -= 15;
         }
         if (key === 'right') {
-            this.x +=5;
+            this.x += 15;
         }
         /* ADD COLLISION DETECTION, and PREVENT MOVING OFF SCREEN */
+    }
+    restart() {
+// Moves the player back to original position
+        this.x = 200;
+        this.y = 400;
+// Removes all enemies from game
+        allEnemies.length = 0;
     }
 }
 
@@ -56,7 +63,12 @@ class Player {
 // Place the player object in a variable called player
 const randomSpeed = () => Math.floor(Math.random() * 10);
 
-const allEnemies = [new Enemy(-100, 60, randomSpeed()), new Enemy(-100, 143, randomSpeed()), new Enemy(-100, 226, randomSpeed())];
+const allEnemies = [
+    new Enemy(-100, 60, randomSpeed()),
+    new Enemy(-100, 143, randomSpeed()),
+    new Enemy(-100, 226, randomSpeed())
+];
+
 const player = new Player(200, 400);
 
 // Generate random enemies at a set interval
@@ -66,18 +78,21 @@ setInterval(function() {
     const randomRow = () => rows[Math.floor(Math.random() * rows.length)];
 
     allEnemies.push(new Enemy(-100, randomRow(), randomSpeed()));
-}, 500);
+}, 600);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keydown', function(e) {
-    e.preventDefault();
     var allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
         40: 'down'
     };
+// Prevent keyboard scroll when moving character
+    if (typeof allowedKeys[e.keyCode] === "string") {
+        e.preventDefault();
+    }
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
