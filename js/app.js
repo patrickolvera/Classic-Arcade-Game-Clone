@@ -43,12 +43,16 @@ class Player {
         this.height = 65;
     }
     update(dt) {
-// Restart game when water is reached
+// Restart game when water or end of canvas are reached
         player.y < 0 ? this.restart() : null;
+        player.y > 450 ? this.restart() : null;
+        player.x < -80 ? this.restart() : null;
+        player.x > 480 ? this.restart() : null;
     }
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
+// Movespeed set to 15 in all directions
     handleInput(key) {
         if (key === 'up') {
             this.y -= 15;
@@ -110,7 +114,3 @@ document.addEventListener('keydown', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-
-/* TO DO: 
-    - PREVENT MOVING OFF SCREEN
-*/
