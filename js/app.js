@@ -31,7 +31,6 @@ class Enemy {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 }
-
 // The player we will be controlling
 class Player {
     constructor(x, y) {
@@ -54,18 +53,10 @@ class Player {
     }
 // Movespeed set to 15 in all directions
     handleInput(key) {
-        if (key === 'up') {
-            this.y -= 15;
-        }
-        if (key === 'down') {
-            this.y += 15;
-        }
-        if (key === 'left') {
-            this.x -= 15;
-        }
-        if (key === 'right') {
-            this.x += 15;
-        }
+        key === 'up' ? this.y -= 20 : null;
+        key === 'down' ? this.y += 20 : null;
+        key === 'left' ? this.x -= 20 : null;
+        key === 'right' ? this.x += 20 : null;
     }
     restart() {
 // Moves the player back to original position
@@ -75,7 +66,6 @@ class Player {
         allEnemies.length = 0;
     }
 }
-
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -88,7 +78,6 @@ const allEnemies = [
 ];
 
 const player = new Player(200, 400);
-
 // Generate random enemies at a set interval
 // Enemies should have a random y position between 3 options, and a random speed
 setInterval(function() {
@@ -97,7 +86,6 @@ setInterval(function() {
 
     allEnemies.push(new Enemy(-100, randomRow(), randomSpeed()));
 }, 600);
-
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keydown', function(e) {
