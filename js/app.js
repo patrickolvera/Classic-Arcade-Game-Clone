@@ -22,7 +22,7 @@ class Enemy {
             player.x + player.width > this.x &&
             player.y < this.y + this.height &&
             player.height + player.y > this.y) {
-// Restart game if collision is detected            
+// Restart game if collision is detected
             player.restart();
         }
     }
