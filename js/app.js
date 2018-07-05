@@ -1,21 +1,32 @@
 // Enemies our player must avoid
 class Enemy {
-    // Constuct enemies with a given x & y position, and speed
+// Constuct enemies with a given x & y position, and speed
     constructor(x, y, speed) {
     this.x = x;
     this.y = y;
     this.speed = speed;
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+// The image/sprite for our enemies, this uses
+// a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+// Collision Box
+    this.width = 90;
+    this.height = 70;
     }
-    // Update the enemy's position
+// Update the enemy's position
     update(dt) {
-    // Multiply movement by the dt parameter which will ensure
-    // the game runs at the same speed for all computers.
+// Multiply movement by the dt parameter which will ensure
+// the game runs at the same speed for all computers.
     this.x += 100 * dt * this.speed;
+// Collision Detection
+        if (player.x < this.x + this.width &&
+            player.x + player.width > this.x &&
+            player.y < this.y + this.height &&
+            player.height + player.y > this.y) {
+// Restart game if collision is detected            
+            player.restart();
+        }
     }
-    // Draw the enemy on the screen
+// Draw the enemy on the screen
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
@@ -27,9 +38,13 @@ class Player {
         this.x = x;
         this.y = y;
         this.sprite = 'images/char-boy.png';
+// Collision Box
+        this.width = 55;
+        this.height = 65;
     }
     update(dt) {
-
+// Restart game when water is reached
+        player.y < 0 ? this.restart() : null;
     }
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -47,7 +62,6 @@ class Player {
         if (key === 'right') {
             this.x += 15;
         }
-        /* ADD COLLISION DETECTION, and PREVENT MOVING OFF SCREEN */
     }
     restart() {
 // Moves the player back to original position
@@ -61,7 +75,7 @@ class Player {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-const randomSpeed = () => Math.floor(Math.random() * 10);
+const randomSpeed = () => Math.floor(Math.random() * 7);
 
 const allEnemies = [
     new Enemy(-100, 60, randomSpeed()),
@@ -96,3 +110,7 @@ document.addEventListener('keydown', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+/* TO DO: 
+    - PREVENT MOVING OFF SCREEN
+*/
